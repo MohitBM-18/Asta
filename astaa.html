@@ -1,0 +1,3137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ASTA • Student Hub</title>
+    <style>
+      :root {
+        --r18: 18px;
+        --r14: 14px;
+        --shadow: 0 18px 60px rgba(0, 0, 0, 0.22);
+
+        /* Dark default */
+        --bg0: #070a12;
+        --bg1: #0b1022;
+        --card: rgba(255, 255, 255, 0.06);
+        --card2: rgba(255, 255, 255, 0.09);
+        --border: rgba(255, 255, 255, 0.12);
+        --text: #eaf0ff;
+        --muted: #aab7e6;
+
+        --p1: #7c3aed;
+        --p2: #06b6d4;
+        --p3: #22c55e;
+        --warn: #f59e0b;
+        --danger: #ef4444;
+        --ok: #10b981;
+      }
+
+      [data-theme="light"] {
+        --bg0: #f6f8ff;
+        --bg1: #eef2ff;
+        --card: rgba(2, 6, 23, 0.04);
+        --card2: rgba(2, 6, 23, 0.06);
+        --border: rgba(2, 6, 23, 0.12);
+        --text: #0b1022;
+        --muted: #475569;
+        --shadow: 0 18px 60px rgba(2, 6, 23, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family:
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          Arial;
+        color: var(--text);
+        background:
+          radial-gradient(
+            900px 600px at 15% 10%,
+            rgba(124, 58, 237, 0.22),
+            transparent 60%
+          ),
+          radial-gradient(
+            800px 600px at 80% 0%,
+            rgba(6, 182, 212, 0.2),
+            transparent 55%
+          ),
+          radial-gradient(
+            900px 700px at 70% 90%,
+            rgba(34, 197, 94, 0.14),
+            transparent 60%
+          ),
+          linear-gradient(180deg, var(--bg0), var(--bg1));
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .container {
+        width: min(1180px, 92vw);
+        margin: 0 auto;
+      }
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 60;
+        background: color-mix(in srgb, var(--bg0) 70%, transparent);
+        border-bottom: 1px solid var(--border);
+        backdrop-filter: blur(12px);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 0;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 900;
+        cursor: pointer;
+      }
+      .logo {
+        width: 40px;
+        height: 40px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, var(--p1), var(--p2));
+        box-shadow: 0 18px 50px rgba(124, 58, 237, 0.18);
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .card {
+        background: linear-gradient(
+          180deg,
+          var(--card),
+          color-mix(in srgb, var(--card) 70%, transparent)
+        );
+        border: 1px solid var(--border);
+        border-radius: var(--r18);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(10px);
+      }
+      .btn {
+        border: 0;
+        border-radius: var(--r14);
+        padding: 12px 14px;
+        cursor: pointer;
+        font-weight: 800;
+        letter-spacing: 0.2px;
+        color: var(--text);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition:
+          transform 0.12s ease,
+          filter 0.12s ease,
+          opacity 0.12s ease;
+        user-select: none;
+      }
+      .btn:active {
+        transform: scale(0.98);
+      }
+      .btn-primary {
+        background: linear-gradient(90deg, var(--p1), var(--p2));
+        box-shadow: 0 14px 40px rgba(124, 58, 237, 0.2);
+      }
+      .btn-ghost {
+        background: var(--card);
+        border: 1px solid var(--border);
+      }
+      .btn-danger {
+        background: color-mix(in srgb, var(--danger) 18%, transparent);
+        border: 1px solid color-mix(in srgb, var(--danger) 40%, transparent);
+      }
+      .btn-small {
+        padding: 9px 12px;
+        border-radius: 12px;
+        font-weight: 800;
+      }
+      .input,
+      select,
+      textarea {
+        width: 100%;
+        border-radius: var(--r14);
+        border: 1px solid var(--border);
+        background: var(--card);
+        color: var(--text);
+        padding: 12px 12px;
+        outline: none;
+      }
+      textarea {
+        resize: vertical;
+        min-height: 92px;
+      }
+      label {
+        display: block;
+        margin: 10px 0 6px;
+        color: var(--muted);
+        font-size: 12.5px;
+      }
+      .grid {
+        display: grid;
+        gap: 14px;
+      }
+      .grid2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .grid3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      @media (max-width: 980px) {
+        .grid3 {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 860px) {
+        .grid2 {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 10px;
+        border-radius: 999px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 12px;
+        white-space: nowrap;
+      }
+      .badge.public {
+        border-color: color-mix(in srgb, var(--p2) 50%, transparent);
+        color: color-mix(in srgb, var(--p2) 30%, var(--text));
+      }
+      .badge.private {
+        border-color: color-mix(in srgb, var(--warn) 50%, transparent);
+        color: color-mix(in srgb, var(--warn) 30%, var(--text));
+      }
+      .badge.ok {
+        border-color: color-mix(in srgb, var(--ok) 55%, transparent);
+        color: color-mix(in srgb, var(--ok) 35%, var(--text));
+      }
+      .badge.warn {
+        border-color: color-mix(in srgb, var(--warn) 55%, transparent);
+        color: color-mix(in srgb, var(--warn) 35%, var(--text));
+      }
+      .badge.danger {
+        border-color: color-mix(in srgb, var(--danger) 55%, transparent);
+        color: color-mix(in srgb, var(--danger) 35%, var(--text));
+      }
+
+      .sep {
+        height: 1px;
+        background: var(--border);
+        margin: 14px 0;
+      }
+      .h1 {
+        font-size: 46px;
+        line-height: 1.05;
+        margin: 0;
+      }
+      .h2 {
+        font-size: 22px;
+        margin: 0;
+      }
+      .h3 {
+        font-size: 16px;
+        margin: 0;
+      }
+      .p {
+        color: var(--muted);
+        margin: 0;
+        line-height: 1.6;
+      }
+
+      .row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      .right {
+        margin-left: auto;
+      }
+      .hide {
+        display: none !important;
+      }
+
+      .menu {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      /* Sections layout */
+      .page {
+        padding: 20px 0 76px;
+      }
+      .hero {
+        padding: 46px 0 30px;
+      }
+
+      .kpi {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .tile {
+        padding: 14px;
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        background: var(--card);
+      }
+
+      /* List cards */
+      .item {
+        padding: 12px;
+        border-radius: 16px;
+      }
+      .item-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: flex-start;
+      }
+      .item-title {
+        font-weight: 900;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .item-meta {
+        font-size: 12px;
+      }
+      .tags {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 8px;
+      }
+      .item-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-end;
+        min-width: 180px;
+      }
+      @media (max-width: 860px) {
+        .item-actions {
+          min-width: auto;
+          align-items: flex-start;
+        }
+      }
+
+      /* Modal */
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        z-index: 100;
+      }
+      .modal {
+        width: min(760px, 96vw);
+        padding: 16px;
+      }
+
+      /* Toast */
+      .toast {
+        position: fixed;
+        right: 16px;
+        bottom: 16px;
+        z-index: 200;
+        padding: 12px 14px;
+        border-radius: 14px;
+        background: var(--card2);
+        border: 1px solid var(--border);
+        backdrop-filter: blur(10px);
+        max-width: min(420px, 92vw);
+        box-shadow: var(--shadow);
+      }
+
+      /* Progress bars */
+      .bar {
+        height: 10px;
+        border-radius: 999px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        overflow: hidden;
+      }
+      .bar > div {
+        height: 100%;
+        background: linear-gradient(90deg, var(--p2), var(--p1));
+        width: 40%;
+      }
+      .mini {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .pill {
+        padding: 10px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: var(--card);
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="container nav">
+        <div class="brand" onclick="go('landing')">
+          <div class="logo"></div>
+          <div>
+            <div style="font-size: 15px">ASTA</div>
+            <div class="muted" style="font-size: 12px">
+              Student Hub • Resources • Deadlines • Community
+            </div>
+          </div>
+        </div>
+
+        <div class="menu">
+          <button class="btn btn-ghost btn-small" onclick="go('landing')">
+            Home
+          </button>
+          <button class="btn btn-ghost btn-small" onclick="go('dashboard')">
+            Dashboard
+          </button>
+          <button class="btn btn-ghost btn-small" onclick="go('announcements')">
+            Announcements
+          </button>
+          <button class="btn btn-ghost btn-small" onclick="go('assignments')">
+            Assignments
+          </button>
+          <button class="btn btn-ghost btn-small" onclick="go('discussions')">
+            Forum
+          </button>
+          <button class="btn btn-ghost btn-small" onclick="go('opportunities')">
+            Internships
+          </button>
+          <button class="btn btn-ghost btn-small" onclick="go('fest')">
+            Fest Board
+          </button>
+          <button class="btn btn-ghost btn-small" onclick="go('performance')">
+            Performance
+          </button>
+
+          <span class="badge" id="who" style="display: none"></span>
+
+          <button
+            class="btn btn-ghost btn-small"
+            onclick="toggleTheme()"
+            id="themeBtn"
+          >
+            🌙 Dark
+          </button>
+          <button
+            class="btn btn-primary btn-small"
+            onclick="go('auth')"
+            id="authBtn"
+          >
+            Login
+          </button>
+          <button
+            class="btn btn-ghost btn-small"
+            onclick="logout()"
+            id="logoutBtn"
+            style="display: none"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- LANDING -->
+    <section id="page-landing" class="container page">
+      <div class="hero">
+        <div class="grid grid2" style="align-items: center">
+          <div>
+            <div class="badge ok">⚡ Firebase Connected • Single-File SPA</div>
+            <h1 class="h1" style="margin-top: 14px">
+              A student dashboard that feels
+              <span
+                style="
+                  background: linear-gradient(90deg, var(--p2), var(--p1));
+                  -webkit-background-clip: text;
+                  color: transparent;
+                "
+                >premium</span
+              >.
+            </h1>
+            <p class="p" style="margin-top: 14px">
+              Upload resources, track deadlines, follow announcements, join
+              discussions, explore internships, check fest updates, and monitor
+              performance — in one smooth hub.
+            </p>
+
+            <div class="row" style="margin-top: 18px">
+              <button class="btn btn-primary" onclick="go('auth')">
+                Get Started
+              </button>
+              <button class="btn btn-ghost" onclick="go('dashboard')">
+                Open Dashboard
+              </button>
+              <button class="btn btn-ghost" onclick="seedAll()">
+                Seed Starter Content
+              </button>
+            </div>
+
+            <div class="kpi" style="margin-top: 18px">
+              <span class="badge">⭐ Ratings + reviews</span>
+              <span class="badge">⬇ Downloads tracking</span>
+              <span class="badge">🗓 Deadline tracker</span>
+              <span class="badge">💬 Community forum</span>
+              <span class="badge">🎓 Opportunities board</span>
+              <span class="badge">🎉 Fest + blog</span>
+            </div>
+          </div>
+
+          <div class="card" style="padding: 18px">
+            <div class="row">
+              <div>
+                <div class="h2">Today at a glance</div>
+                <div class="muted mini">Live data from Firestore</div>
+              </div>
+              <span class="badge right" id="clockBadge">⏱ Loading…</span>
+            </div>
+
+            <div class="sep"></div>
+
+            <div class="grid grid3">
+              <div class="tile">
+                <div class="mini">Announcements</div>
+                <div style="font-size: 28px; font-weight: 900" id="kpiAnn">
+                  —
+                </div>
+                <div class="mini">Latest campus updates</div>
+              </div>
+              <div class="tile">
+                <div class="mini">Assignments</div>
+                <div style="font-size: 28px; font-weight: 900" id="kpiAsg">
+                  —
+                </div>
+                <div class="mini">Upcoming deadlines</div>
+              </div>
+              <div class="tile">
+                <div class="mini">Resources</div>
+                <div style="font-size: 28px; font-weight: 900" id="kpiRes">
+                  —
+                </div>
+                <div class="mini">Notes, QP, solutions</div>
+              </div>
+            </div>
+
+            <div class="sep"></div>
+
+            <div class="row">
+              <span class="badge ok">✅ Auth + Storage upload</span>
+              <span class="badge">🔎 Filters + sort</span>
+              <span class="badge">📌 Pinned posts</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid3" style="margin-top: 16px">
+        <div class="card" style="padding: 16px">
+          <div class="h3">Smart Resources</div>
+          <div class="sep"></div>
+          <div class="mini">
+            Upload & find exactly what you need with filters by semester/type +
+            ratings.
+          </div>
+          <div style="margin-top: 12px" class="bar">
+            <div style="width: 78%"></div>
+          </div>
+          <div class="mini" style="margin-top: 10px">
+            Search speed • relevance • trust score
+          </div>
+        </div>
+        <div class="card" style="padding: 16px">
+          <div class="h3">Deadline Focus</div>
+          <div class="sep"></div>
+          <div class="mini">
+            Deadline tracker shows urgency & schedule impact.
+          </div>
+          <div style="margin-top: 12px" class="bar">
+            <div style="width: 64%"></div>
+          </div>
+          <div class="mini" style="margin-top: 10px">
+            Upcoming • due soon • overdue
+          </div>
+        </div>
+        <div class="card" style="padding: 16px">
+          <div class="h3">Community Pulse</div>
+          <div class="sep"></div>
+          <div class="mini">
+            Forum threads for doubts, collabs, and quick answers.
+          </div>
+          <div style="margin-top: 12px" class="bar">
+            <div style="width: 71%"></div>
+          </div>
+          <div class="mini" style="margin-top: 10px">
+            Active users • trending topics
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AUTH -->
+    <section id="page-auth" class="container page hide">
+      <div class="card" style="padding: 18px">
+        <div
+          class="row"
+          style="justify-content: space-between; align-items: center"
+        >
+          <div>
+            <div class="h2">Login / Register</div>
+            <div class="muted mini">
+              Email/Password via Firebase Authentication
+            </div>
+          </div>
+          <button class="btn btn-ghost" onclick="toggleMode()">
+            Switch to <span id="modeLabel">Register</span>
+          </button>
+        </div>
+
+        <div class="sep"></div>
+
+        <div class="grid grid2">
+          <div>
+            <label>Email</label>
+            <input class="input" id="email" placeholder="you@college.edu" />
+            <label>Password</label>
+            <input
+              class="input"
+              id="password"
+              type="password"
+              placeholder="••••••••"
+            />
+
+            <div id="registerFields" class="hide">
+              <div class="sep"></div>
+              <div class="mini muted">
+                Profile (used for private resources access)
+              </div>
+
+              <label>Name</label>
+              <input class="input" id="name" placeholder="Full name" />
+
+              <label>College</label>
+              <input
+                class="input"
+                id="college"
+                placeholder="MSRIT / NIE / ..."
+              />
+
+              <label>Branch</label>
+              <input
+                class="input"
+                id="branch"
+                placeholder="CSE / ISE / ECE / ME / ..."
+              />
+
+              <div class="grid grid2">
+                <div>
+                  <label>Semester</label>
+                  <input class="input" id="semester" placeholder="3" />
+                </div>
+                <div>
+                  <label>Year</label>
+                  <input class="input" id="year" value="2026" />
+                </div>
+              </div>
+            </div>
+
+            <div class="row" style="margin-top: 16px">
+              <button class="btn btn-primary" onclick="submitAuth()">
+                Continue
+              </button>
+              <button class="btn btn-ghost" onclick="go('landing')">
+                Back
+              </button>
+            </div>
+
+            <div id="authMsg" class="mini" style="margin-top: 12px"></div>
+          </div>
+
+          <div class="card" style="padding: 16px">
+            <div class="h3">What you get after login</div>
+            <div class="sep"></div>
+            <div class="grid" style="gap: 10px">
+              <div class="pill">
+                <span>📦 Upload resources to Storage</span
+                ><span class="badge ok">Enabled</span>
+              </div>
+              <div class="pill">
+                <span>🔐 Private resources (college-based)</span
+                ><span class="badge ok">Enabled</span>
+              </div>
+              <div class="pill">
+                <span>⭐ Rate + review</span
+                ><span class="badge ok">Enabled</span>
+              </div>
+              <div class="pill">
+                <span>📊 Performance tracker</span
+                ><span class="badge ok">Enabled</span>
+              </div>
+            </div>
+            <div class="sep"></div>
+            <div class="mini muted">
+              Tip: if login fails, check Firebase → Authentication → enable
+              Email/Password.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DASHBOARD / RESOURCES -->
+    <section id="page-dashboard" class="container page hide">
+      <div class="grid grid2">
+        <!-- Upload -->
+        <div class="card" style="padding: 16px">
+          <div
+            class="row"
+            style="justify-content: space-between; align-items: center"
+          >
+            <div>
+              <div class="h2">Upload Resource</div>
+              <div class="mini muted">
+                Stored in Firebase Storage • Indexed in Firestore
+              </div>
+            </div>
+            <span class="badge">Max 25MB</span>
+          </div>
+
+          <div class="sep"></div>
+
+          <label>File</label>
+          <input class="input" type="file" id="file" />
+
+          <label>Title</label>
+          <input
+            class="input"
+            id="uTitle"
+            placeholder="Eg: Data Structures Unit 2 Notes"
+          />
+
+          <div class="grid grid2">
+            <div>
+              <label>Subject</label>
+              <input
+                class="input"
+                id="uSubject"
+                placeholder="Data Structures"
+              />
+            </div>
+            <div>
+              <label>Semester</label>
+              <input class="input" id="uSem" placeholder="3" />
+            </div>
+          </div>
+
+          <div class="grid grid2">
+            <div>
+              <label>Type</label>
+              <select class="input" id="uType">
+                <option>Notes</option>
+                <option>Question Papers</option>
+                <option>Solutions</option>
+                <option>Project Reports</option>
+                <option>Study Material</option>
+              </select>
+            </div>
+            <div>
+              <label>Year/Batch</label>
+              <input class="input" id="uBatch" value="2025-26" />
+            </div>
+          </div>
+
+          <label>Tags (comma separated)</label>
+          <input
+            class="input"
+            id="uTags"
+            placeholder="unit-2, important, exam"
+          />
+
+          <label>Privacy</label>
+          <select class="input" id="uPrivacy">
+            <option>Public</option>
+            <option>Private</option>
+          </select>
+
+          <label>Description</label>
+          <textarea
+            class="input"
+            id="uDesc"
+            placeholder="Coverage, syllabus mapping, tips..."
+          ></textarea>
+
+          <div class="row" style="margin-top: 14px">
+            <button class="btn btn-primary" onclick="uploadResource()">
+              Upload
+            </button>
+            <button class="btn btn-ghost" onclick="resetUpload()">Reset</button>
+            <button class="btn btn-ghost" onclick="seedAll()">
+              Seed Starter Content
+            </button>
+          </div>
+
+          <div id="uMsg" class="mini muted" style="margin-top: 12px"></div>
+        </div>
+
+        <!-- Browse -->
+        <div class="card" style="padding: 16px">
+          <div
+            class="row"
+            style="justify-content: space-between; align-items: center"
+          >
+            <div>
+              <div class="h2">Browse & Download</div>
+              <div class="mini muted">Filters • Sort • Ratings</div>
+            </div>
+            <span class="badge">Resources</span>
+          </div>
+
+          <div class="sep"></div>
+
+          <div class="grid grid2">
+            <div>
+              <label>Search</label>
+              <input
+                class="input"
+                id="qText"
+                placeholder="title/subject/tags..."
+                oninput="renderResources()"
+              />
+            </div>
+            <div>
+              <label>Sort</label>
+              <select class="input" id="qSort" onchange="renderResources()">
+                <option value="latest">Latest</option>
+                <option value="highest">Highest rated</option>
+                <option value="popular">Most downloaded</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid2">
+            <div>
+              <label>Type</label>
+              <select class="input" id="qType" onchange="renderResources()">
+                <option value="">All</option>
+                <option>Notes</option>
+                <option>Question Papers</option>
+                <option>Solutions</option>
+                <option>Project Reports</option>
+                <option>Study Material</option>
+              </select>
+            </div>
+            <div>
+              <label>Privacy</label>
+              <select class="input" id="qPrivacy" onchange="renderResources()">
+                <option value="">All</option>
+                <option>Public</option>
+                <option>Private</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="sep"></div>
+          <div
+            id="resList"
+            class="grid"
+            style="grid-template-columns: 1fr; gap: 12px"
+          ></div>
+          <div id="resEmpty" class="mini muted" style="margin-top: 12px"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ANNOUNCEMENTS -->
+    <section id="page-announcements" class="container page hide">
+      <div class="card" style="padding: 16px">
+        <div
+          class="row"
+          style="justify-content: space-between; align-items: center"
+        >
+          <div>
+            <div class="h2">Announcements</div>
+            <div class="mini muted">Pinned + chronological feed</div>
+          </div>
+          <div class="row">
+            <button
+              class="btn btn-ghost btn-small"
+              onclick="seedAnnouncements()"
+            >
+              Seed
+            </button>
+            <button
+              class="btn btn-primary btn-small"
+              onclick="openCreate('ann')"
+            >
+              Create
+            </button>
+          </div>
+        </div>
+
+        <div class="sep"></div>
+
+        <div class="grid grid3">
+          <div class="tile">
+            <div class="mini">Pinned</div>
+            <div style="font-size: 28px; font-weight: 900" id="annPinned">
+              —
+            </div>
+            <div class="mini">Important updates</div>
+          </div>
+          <div class="tile">
+            <div class="mini">This week</div>
+            <div style="font-size: 28px; font-weight: 900" id="annWeek">—</div>
+            <div class="mini">New posts</div>
+          </div>
+          <div class="tile">
+            <div class="mini">Reach</div>
+            <div style="font-size: 28px; font-weight: 900" id="annReach">—</div>
+            <div class="mini">Views estimate</div>
+          </div>
+        </div>
+
+        <div class="sep"></div>
+
+        <div
+          id="annList"
+          class="grid"
+          style="grid-template-columns: 1fr; gap: 12px"
+        ></div>
+        <div id="annEmpty" class="mini muted"></div>
+      </div>
+    </section>
+
+    <!-- ASSIGNMENTS -->
+    <section id="page-assignments" class="container page hide">
+      <div class="card" style="padding: 16px">
+        <div
+          class="row"
+          style="justify-content: space-between; align-items: center"
+        >
+          <div>
+            <div class="h2">Assignments</div>
+            <div class="mini muted">Deadline tracker • Priority • Status</div>
+          </div>
+          <div class="row">
+            <button class="btn btn-ghost btn-small" onclick="seedAssignments()">
+              Seed
+            </button>
+            <button
+              class="btn btn-primary btn-small"
+              onclick="openCreate('asg')"
+            >
+              Add
+            </button>
+          </div>
+        </div>
+
+        <div class="sep"></div>
+
+        <div class="grid grid3">
+          <div class="tile">
+            <div class="mini">Due soon</div>
+            <div style="font-size: 28px; font-weight: 900" id="asgSoon">—</div>
+            <div class="mini">Next 72 hours</div>
+          </div>
+          <div class="tile">
+            <div class="mini">In progress</div>
+            <div style="font-size: 28px; font-weight: 900" id="asgProg">—</div>
+            <div class="mini">Active tasks</div>
+          </div>
+          <div class="tile">
+            <div class="mini">Completed</div>
+            <div style="font-size: 28px; font-weight: 900" id="asgDone">—</div>
+            <div class="mini">This month</div>
+          </div>
+        </div>
+
+        <div class="sep"></div>
+
+        <div
+          id="asgList"
+          class="grid"
+          style="grid-template-columns: 1fr; gap: 12px"
+        ></div>
+        <div id="asgEmpty" class="mini muted"></div>
+      </div>
+    </section>
+
+    <!-- DISCUSSIONS -->
+    <section id="page-discussions" class="container page hide">
+      <div class="card" style="padding: 16px">
+        <div
+          class="row"
+          style="justify-content: space-between; align-items: center"
+        >
+          <div>
+            <div class="h2">Discussion Forum</div>
+            <div class="mini muted">Ask doubts • Share solutions • Team up</div>
+          </div>
+          <div class="row">
+            <button class="btn btn-ghost btn-small" onclick="seedThreads()">
+              Seed
+            </button>
+            <button
+              class="btn btn-primary btn-small"
+              onclick="openCreate('thr')"
+            >
+              New Thread
+            </button>
+          </div>
+        </div>
+
+        <div class="sep"></div>
+
+        <div class="grid grid3">
+          <div class="tile">
+            <div class="mini">Active</div>
+            <div style="font-size: 28px; font-weight: 900" id="thrActive">
+              —
+            </div>
+            <div class="mini">Threads</div>
+          </div>
+          <div class="tile">
+            <div class="mini">Hot topics</div>
+            <div style="font-size: 28px; font-weight: 900" id="thrHot">—</div>
+            <div class="mini">Today</div>
+          </div>
+          <div class="tile">
+            <div class="mini">Replies</div>
+            <div style="font-size: 28px; font-weight: 900" id="thrReplies">
+              —
+            </div>
+            <div class="mini">Last 7 days</div>
+          </div>
+        </div>
+
+        <div class="sep"></div>
+
+        <div
+          id="thrList"
+          class="grid"
+          style="grid-template-columns: 1fr; gap: 12px"
+        ></div>
+        <div id="thrEmpty" class="mini muted"></div>
+      </div>
+    </section>
+
+    <!-- OPPORTUNITIES -->
+    <section id="page-opportunities" class="container page hide">
+      <div class="card" style="padding: 16px">
+        <div
+          class="row"
+          style="justify-content: space-between; align-items: center"
+        >
+          <div>
+            <div class="h2">Internships & Opportunities</div>
+            <div class="mini muted">
+              Curated openings • Skills • Apply links
+            </div>
+          </div>
+          <div class="row">
+            <button class="btn btn-ghost btn-small" onclick="seedOpp()">
+              Seed
+            </button>
+            <button
+              class="btn btn-primary btn-small"
+              onclick="openCreate('opp')"
+            >
+              Post
+            </button>
+          </div>
+        </div>
+
+        <div class="sep"></div>
+
+        <div class="grid grid3">
+          <div class="tile">
+            <div class="mini">Open roles</div>
+            <div style="font-size: 28px; font-weight: 900" id="oppOpen">—</div>
+            <div class="mini">Currently listed</div>
+          </div>
+          <div class="tile">
+            <div class="mini">Remote</div>
+            <div style="font-size: 28px; font-weight: 900" id="oppRemote">
+              —
+            </div>
+            <div class="mini">Flexible</div>
+          </div>
+          <div class="tile">
+            <div class="mini">Stipend range</div>
+            <div style="font-size: 18px; font-weight: 900" id="oppStip">—</div>
+            <div class="mini">Monthly</div>
+          </div>
+        </div>
+
+        <div class="sep"></div>
+
+        <div
+          id="oppList"
+          class="grid"
+          style="grid-template-columns: 1fr; gap: 12px"
+        ></div>
+        <div id="oppEmpty" class="mini muted"></div>
+      </div>
+    </section>
+
+    <!-- FEST BOARD + BLOG -->
+    <section id="page-fest" class="container page hide">
+      <div class="card" style="padding: 16px">
+        <div
+          class="row"
+          style="justify-content: space-between; align-items: center"
+        >
+          <div>
+            <div class="h2">Fest Board</div>
+            <div class="mini muted">Events • Registrations • Blog updates</div>
+          </div>
+          <div class="row">
+            <button class="btn btn-ghost btn-small" onclick="seedFests()">
+              Seed
+            </button>
+            <button
+              class="btn btn-primary btn-small"
+              onclick="openCreate('fest')"
+            >
+              Add
+            </button>
+          </div>
+        </div>
+
+        <div class="sep"></div>
+
+        <div class="grid grid2">
+          <div class="card" style="padding: 14px">
+            <div class="h3">Featured Blog</div>
+            <div class="sep"></div>
+            <div class="mini muted" id="festBlogMeta">Loading…</div>
+            <div
+              style="margin-top: 10px; font-weight: 900; font-size: 18px"
+              id="festBlogTitle"
+            >
+              —
+            </div>
+            <div class="p" style="margin-top: 10px" id="festBlogBody">—</div>
+          </div>
+          <div class="card" style="padding: 14px">
+            <div class="h3">Quick Stats</div>
+            <div class="sep"></div>
+            <div class="grid" style="gap: 10px">
+              <div class="pill">
+                <span>🎟 Events</span
+                ><span class="badge ok" id="festCount">—</span>
+              </div>
+              <div class="pill">
+                <span>📍 Venues</span
+                ><span class="badge" id="festVenues">—</span>
+              </div>
+              <div class="pill">
+                <span>🔥 Trending</span
+                ><span class="badge warn" id="festTrend">—</span>
+              </div>
+            </div>
+            <div class="sep"></div>
+            <div class="mini muted">
+              Includes a blog post about a fest at <b>MS Ramaiah</b> (edit any
+              time).
+            </div>
+          </div>
+        </div>
+
+        <div class="sep"></div>
+
+        <div
+          id="festList"
+          class="grid"
+          style="grid-template-columns: 1fr; gap: 12px"
+        ></div>
+        <div id="festEmpty" class="mini muted"></div>
+      </div>
+    </section>
+
+    <!-- PERFORMANCE TRACKER -->
+    <section id="page-performance" class="container page hide">
+      <div class="card" style="padding: 16px">
+        <div
+          class="row"
+          style="justify-content: space-between; align-items: center"
+        >
+          <div>
+            <div class="h2">Performance Tracker</div>
+            <div class="mini muted">
+              Attendance • Internal marks • Skill goals
+            </div>
+          </div>
+          <div class="row">
+            <button class="btn btn-ghost btn-small" onclick="seedPerformance()">
+              Seed
+            </button>
+            <button
+              class="btn btn-primary btn-small"
+              onclick="savePerformance()"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+
+        <div class="sep"></div>
+
+        <div class="grid grid3">
+          <div class="card" style="padding: 14px">
+            <div class="h3">Attendance</div>
+            <div class="sep"></div>
+            <div class="mini muted">Target: 85%</div>
+            <div
+              style="font-size: 30px; font-weight: 900; margin-top: 6px"
+              id="attNum"
+            >
+              —
+            </div>
+            <div class="bar" style="margin-top: 10px">
+              <div id="attBar" style="width: 0%"></div>
+            </div>
+            <div class="mini muted" style="margin-top: 10px">
+              Tip: keep a steady streak.
+            </div>
+          </div>
+
+          <div class="card" style="padding: 14px">
+            <div class="h3">Internal Score</div>
+            <div class="sep"></div>
+            <div class="mini muted">Target: 40/50</div>
+            <div
+              style="font-size: 30px; font-weight: 900; margin-top: 6px"
+              id="intNum"
+            >
+              —
+            </div>
+            <div class="bar" style="margin-top: 10px">
+              <div id="intBar" style="width: 0%"></div>
+            </div>
+            <div class="mini muted" style="margin-top: 10px">
+              Focus: weak units first.
+            </div>
+          </div>
+
+          <div class="card" style="padding: 14px">
+            <div class="h3">Skills Progress</div>
+            <div class="sep"></div>
+            <div class="mini muted">Weekly goals</div>
+            <div style="margin-top: 10px" class="grid" id="skillsBox"></div>
+          </div>
+        </div>
+
+        <div class="sep"></div>
+
+        <div class="grid grid2">
+          <div class="card" style="padding: 14px">
+            <div class="h3">Edit Numbers</div>
+            <div class="sep"></div>
+
+            <label>Attendance %</label>
+            <input
+              class="input"
+              id="attInput"
+              type="number"
+              min="0"
+              max="100"
+              placeholder="Eg: 82"
+            />
+
+            <label>Internal score (out of 50)</label>
+            <input
+              class="input"
+              id="intInput"
+              type="number"
+              min="0"
+              max="50"
+              placeholder="Eg: 34"
+            />
+
+            <label>Skill goals (comma separated)</label>
+            <input
+              class="input"
+              id="skillInput"
+              placeholder="DSA, Angular, DBMS, Aptitude, Projects"
+            />
+
+            <div class="row" style="margin-top: 12px">
+              <button class="btn btn-ghost" onclick="applyPerfPreview()">
+                Preview
+              </button>
+              <span class="mini muted">Saved privately to your account.</span>
+            </div>
+          </div>
+
+          <div class="card" style="padding: 14px">
+            <div class="h3">Insights</div>
+            <div class="sep"></div>
+            <div class="grid" style="gap: 10px">
+              <div class="pill">
+                <span>📌 Best streak</span
+                ><span class="badge ok" id="insStreak">—</span>
+              </div>
+              <div class="pill">
+                <span>🎯 Priority focus</span
+                ><span class="badge warn" id="insFocus">—</span>
+              </div>
+              <div class="pill">
+                <span>📚 Study load</span
+                ><span class="badge" id="insLoad">—</span>
+              </div>
+            </div>
+            <div class="sep"></div>
+            <div class="mini muted">
+              This panel updates based on attendance + internal + skill list.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEW MODAL -->
+    <div
+      id="reviewModal"
+      class="modal-backdrop hide"
+      onclick="if (event.target.id === 'reviewModal') closeReview();"
+    >
+      <div class="card modal">
+        <div
+          class="row"
+          style="justify-content: space-between; align-items: center"
+        >
+          <div>
+            <div class="h2">Rate & Review</div>
+            <div class="mini muted" id="rvMeta">—</div>
+          </div>
+          <button class="btn btn-ghost" onclick="closeReview()">Close</button>
+        </div>
+        <div class="sep"></div>
+
+        <div style="font-weight: 900; font-size: 18px" id="rvTitle">—</div>
+
+        <div class="grid grid2" style="margin-top: 12px">
+          <div>
+            <label>Stars</label>
+            <select class="input" id="rvStars">
+              <option value="5">5</option>
+              <option value="4">4</option>
+              <option value="3">3</option>
+              <option value="2">2</option>
+              <option value="1">1</option>
+            </select>
+          </div>
+          <div>
+            <label>Comment</label>
+            <input
+              class="input"
+              id="rvText"
+              placeholder="Quality / usefulness / completeness..."
+            />
+          </div>
+        </div>
+
+        <div class="row" style="margin-top: 14px">
+          <button class="btn btn-primary" onclick="saveReview()">Save</button>
+        </div>
+
+        <div class="sep"></div>
+        <div class="mini muted">Recent reviews</div>
+        <div
+          id="rvList"
+          class="grid"
+          style="grid-template-columns: 1fr; gap: 10px; margin-top: 10px"
+        ></div>
+      </div>
+    </div>
+
+    <!-- CREATE MODAL -->
+    <div
+      id="createModal"
+      class="modal-backdrop hide"
+      onclick="if (event.target.id === 'createModal') closeCreate();"
+    >
+      <div class="card modal">
+        <div
+          class="row"
+          style="justify-content: space-between; align-items: center"
+        >
+          <div>
+            <div class="h2" id="createTitle">Create</div>
+            <div class="mini muted" id="createHint">—</div>
+          </div>
+          <button class="btn btn-ghost" onclick="closeCreate()">Close</button>
+        </div>
+
+        <div class="sep"></div>
+
+        <label>Title</label>
+        <input class="input" id="cTitle" placeholder="Title..." />
+
+        <label>Subtitle / Tags</label>
+        <input
+          class="input"
+          id="cSub"
+          placeholder="Tags or short subtitle..."
+        />
+
+        <label>Body</label>
+        <textarea
+          class="input"
+          id="cBody"
+          placeholder="Write details..."
+        ></textarea>
+
+        <div class="grid grid2">
+          <div>
+            <label>Label</label>
+            <select class="input" id="cLabel">
+              <option>General</option>
+              <option>Important</option>
+              <option>Academic</option>
+              <option>Club</option>
+              <option>Placement</option>
+              <option>Fest</option>
+            </select>
+          </div>
+          <div>
+            <label>Extra (date / deadline / link)</label>
+            <input
+              class="input"
+              id="cExtra"
+              placeholder="Eg: 2026-02-25 or https://..."
+            />
+          </div>
+        </div>
+
+        <div class="row" style="margin-top: 14px">
+          <button class="btn btn-primary" onclick="submitCreate()">
+            Publish
+          </button>
+          <span class="mini muted" id="createMsg"></span>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast" class="toast hide"></div>
+
+    <script type="module">
+      /* ====================== FIREBASE ====================== */
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+      import {
+        getAuth,
+        createUserWithEmailAndPassword,
+        signInWithEmailAndPassword,
+        signOut,
+        onAuthStateChanged,
+      } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+      import {
+        getFirestore,
+        doc,
+        setDoc,
+        getDoc,
+        collection,
+        updateDoc,
+        deleteDoc,
+        query,
+        orderBy,
+        limit,
+        getDocs,
+        writeBatch,
+      } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+      import {
+        getStorage,
+        ref,
+        uploadBytes,
+        getDownloadURL,
+        deleteObject,
+      } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBDEY36u0w7F0OgwQx0uM4Nr8YhzLqFgbY",
+        authDomain: "asta-aad9a.firebaseapp.com",
+        projectId: "asta-aad9a",
+        storageBucket: "asta-aad9a.appspot.com",
+        messagingSenderId: "161524626506",
+        appId: "1:161524626506:web:52ad7cbaacc885d28722b3",
+        measurementId: "G-1PEYRBFPHR",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+      const storage = getStorage(app);
+
+      /* ====================== HELPERS ====================== */
+      const $ = (id) => document.getElementById(id);
+      const LS_THEME = "asta_theme";
+
+      function escapeHtml(s) {
+        return String(s).replace(
+          /[&<>"']/g,
+          (m) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[m],
+        );
+      }
+      function toast(msg) {
+        const t = $("toast");
+        t.textContent = msg;
+        t.classList.remove("hide");
+        setTimeout(() => t.classList.add("hide"), 2200);
+      }
+      function nowTs() {
+        return Date.now();
+      }
+      function rid() {
+        return Math.random().toString(16).slice(2) + Date.now().toString(16);
+      }
+      function isoDatePlus(days) {
+        const d = new Date(Date.now() + days * 86400000);
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, "0");
+        const da = String(d.getDate()).padStart(2, "0");
+        return `${y}-${m}-${da}`;
+      }
+      function daysLeft(iso) {
+        const t = new Date(iso + "T23:59:59").getTime() - Date.now();
+        return Math.ceil(t / 86400000);
+      }
+
+      /* ====================== STATE ====================== */
+      const state = {
+        mode: "login",
+        user: null,
+        profile: null,
+
+        resources: [],
+        announcements: [],
+        assignments: [],
+        threads: [],
+        opps: [],
+        fests: [],
+
+        activeResource: null,
+        activeCreate: null, // 'ann'|'asg'|'thr'|'opp'|'fest'
+        perf: null,
+      };
+
+      /* ====================== THEME ====================== */
+      function setTheme(theme) {
+        document.documentElement.setAttribute("data-theme", theme);
+        localStorage.setItem(LS_THEME, theme);
+        $("themeBtn").textContent = theme === "light" ? "☀️ Light" : "🌙 Dark";
+      }
+      window.toggleTheme = function () {
+        const cur = localStorage.getItem(LS_THEME) || "dark";
+        setTheme(cur === "dark" ? "light" : "dark");
+      };
+
+      /* ====================== NAV ====================== */
+      window.go = function (page) {
+        const ids = [
+          "landing",
+          "auth",
+          "dashboard",
+          "announcements",
+          "assignments",
+          "discussions",
+          "opportunities",
+          "fest",
+          "performance",
+        ];
+        for (const id of ids) $("page-" + id).classList.add("hide");
+        $("page-" + page).classList.remove("hide");
+        history.replaceState(null, "", "#" + page);
+
+        // gate: if pages require login, still show (but actions require)
+        renderAll();
+      };
+
+      /* ====================== AUTH UI ====================== */
+      window.toggleMode = function () {
+        state.mode = state.mode === "login" ? "register" : "login";
+        $("modeLabel").textContent =
+          state.mode === "login" ? "Register" : "Login";
+        $("registerFields").classList.toggle("hide", state.mode !== "register");
+        $("authMsg").textContent = "";
+      };
+
+      async function upsertProfile(uid, profile) {
+        await setDoc(doc(db, "users", uid), profile, { merge: true });
+      }
+      async function loadProfile(uid) {
+        const snap = await getDoc(doc(db, "users", uid));
+        return snap.exists() ? snap.data() : null;
+      }
+
+      window.submitAuth = async function () {
+        const email = $("email").value.trim();
+        const pass = $("password").value.trim();
+        if (!email || !pass) {
+          $("authMsg").textContent = "⚠ Enter email + password.";
+          return;
+        }
+
+        try {
+          if (state.mode === "login") {
+            await signInWithEmailAndPassword(auth, email, pass);
+            toast("Logged in");
+            go("dashboard");
+            return;
+          }
+
+          // register
+          const name = $("name").value.trim();
+          const college = $("college").value.trim();
+          const branch = $("branch").value.trim();
+          const semester = $("semester").value.trim();
+          const year = $("year").value.trim() || "2026";
+          if (!name || !college || !branch || !semester) {
+            $("authMsg").textContent =
+              "⚠ Fill name, college, branch, semester.";
+            return;
+          }
+
+          const cred = await createUserWithEmailAndPassword(auth, email, pass);
+          const profile = {
+            uid: cred.user.uid,
+            email,
+            name,
+            college,
+            branch,
+            semester,
+            year,
+            createdAt: nowTs(),
+            updatedAt: nowTs(),
+          };
+          await upsertProfile(cred.user.uid, profile);
+          toast("Account created");
+          go("dashboard");
+        } catch (e) {
+          $("authMsg").textContent = "⚠ " + (e?.message || "Auth error");
+        }
+      };
+
+      window.logout = async function () {
+        await signOut(auth);
+        toast("Logged out");
+        go("landing");
+      };
+
+      /* ====================== FETCHERS ====================== */
+      async function fetchCollection(name, sortField = "createdAt", lim = 60) {
+        const qy = query(
+          collection(db, name),
+          orderBy(sortField, "desc"),
+          limit(lim),
+        );
+        const snap = await getDocs(qy);
+        return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      }
+      async function fetchResources() {
+        const qy = query(
+          collection(db, "resources"),
+          orderBy("createdAt", "desc"),
+          limit(200),
+        );
+        const snap = await getDocs(qy);
+        state.resources = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      }
+      async function fetchAll() {
+        state.announcements = await fetchCollection("announcements");
+        state.assignments = await fetchCollection("assignments");
+        state.threads = await fetchCollection("threads");
+        state.opps = await fetchCollection("opportunities");
+        state.fests = await fetchCollection("fests");
+        await fetchResources();
+
+        if (state.user) {
+          const ps = await getDoc(doc(db, "performance", state.user.uid));
+          state.perf = ps.exists() ? ps.data() : null;
+        } else state.perf = null;
+      }
+
+      function canAccessResource(r) {
+        if (r.privacy === "Public") return true;
+        if (!state.profile) return false;
+        return r.college === state.profile.college;
+      }
+
+      /* ====================== RESOURCES ====================== */
+      window.resetUpload = function () {
+        [
+          "file",
+          "uTitle",
+          "uSubject",
+          "uSem",
+          "uBatch",
+          "uTags",
+          "uDesc",
+        ].forEach((id) => {
+          const el = $(id);
+          if (el.type === "file") el.value = "";
+          else el.value = "";
+        });
+        $("uType").value = "Notes";
+        $("uPrivacy").value = "Public";
+        $("uMsg").textContent = "";
+      };
+
+      window.uploadResource = async function () {
+        if (!state.user || !state.profile) {
+          toast("Please login first.");
+          go("auth");
+          return;
+        }
+
+        const title = $("uTitle").value.trim();
+        const subject = $("uSubject").value.trim();
+        const semester = $("uSem").value.trim();
+        const type = $("uType").value;
+        const yearBatch = $("uBatch").value.trim() || "2025-26";
+        const privacy = $("uPrivacy").value;
+        const tags = $("uTags")
+          .value.split(",")
+          .map((x) => x.trim())
+          .filter(Boolean);
+        const description = $("uDesc").value.trim();
+
+        const fileEl = $("file");
+        const file = fileEl.files && fileEl.files[0] ? fileEl.files[0] : null;
+
+        if (!title || !subject || !semester || !file) {
+          $("uMsg").textContent =
+            "⚠ Please fill Title/Subject/Semester and choose a file.";
+          return;
+        }
+
+        try {
+          const id = rid();
+          const storagePath = `resources/${id}/${file.name}`;
+          await uploadBytes(ref(storage, storagePath), file, {
+            contentType: file.type,
+          });
+
+          await setDoc(doc(db, "resources", id), {
+            ownerUid: state.user.uid,
+            title,
+            subject,
+            semester,
+            branch: state.profile.branch,
+            type,
+            yearBatch,
+            description,
+            tags,
+            privacy,
+            college: privacy === "Private" ? state.profile.college : "Any",
+
+            storagePath,
+            fileName: file.name,
+            fileSize: file.size,
+            mimeType: file.type,
+
+            createdAt: nowTs(),
+            updatedAt: nowTs(),
+            ratingAvg: 0,
+            ratingCount: 0,
+            downloadCount: 0,
+          });
+
+          $("uMsg").textContent = "✅ Uploaded successfully.";
+          toast("Uploaded");
+          resetUpload();
+          await fetchResources();
+          renderResources();
+          updateKPIs();
+        } catch (e) {
+          $("uMsg").textContent = "⚠ " + (e?.message || "Upload failed");
+        }
+      };
+
+      window.downloadResource = async function (id) {
+        const r = state.resources.find((x) => x.id === id);
+        if (!r) return;
+
+        if (!canAccessResource(r)) {
+          toast("Access restricted by college (private resource).");
+          return;
+        }
+
+        try {
+          const url = await getDownloadURL(ref(storage, r.storagePath));
+          try {
+            await updateDoc(doc(db, "resources", r.id), {
+              downloadCount: (r.downloadCount || 0) + 1,
+            });
+          } catch {}
+          window.open(url, "_blank");
+          toast("Download started");
+          await fetchResources();
+          renderResources();
+        } catch (e) {
+          toast("Download failed. Make sure the file exists in Storage.");
+        }
+      };
+
+      window.deleteResource = async function (id) {
+        const r = state.resources.find((x) => x.id === id);
+        if (!r) return;
+        if (!state.user || r.ownerUid !== state.user.uid) {
+          toast("Only owner can delete.");
+          return;
+        }
+        if (!confirm("Delete this resource?")) return;
+
+        try {
+          await deleteObject(ref(storage, r.storagePath));
+          await deleteDoc(doc(db, "resources", r.id));
+          toast("Deleted");
+          await fetchResources();
+          renderResources();
+          updateKPIs();
+        } catch (e) {
+          toast("Delete failed.");
+        }
+      };
+
+      /* ====================== REVIEWS ====================== */
+      async function fetchReviews(resourceId) {
+        const qy = query(
+          collection(db, "resources", resourceId, "reviews"),
+          orderBy("updatedAt", "desc"),
+          limit(30),
+        );
+        const snap = await getDocs(qy);
+        return snap.docs.map((d) => ({ uid: d.id, ...d.data() }));
+      }
+
+      window.openReview = async function (id) {
+        const r = state.resources.find((x) => x.id === id);
+        if (!r) return;
+        state.activeResource = r;
+
+        $("rvTitle").textContent = r.title;
+        $("rvMeta").textContent =
+          `${r.subject} • ${r.type} • Sem ${r.semester}`;
+        $("reviewModal").classList.remove("hide");
+
+        const reviews = await fetchReviews(r.id);
+        renderReviewList(reviews);
+
+        // preload own review if exists
+        if (state.user) {
+          const mine = reviews.find((x) => x.uid === state.user.uid);
+          $("rvStars").value = mine ? String(mine.stars) : "5";
+          $("rvText").value = mine ? mine.text || "" : "";
+        }
+      };
+
+      window.closeReview = function () {
+        $("reviewModal").classList.add("hide");
+        state.activeResource = null;
+      };
+
+      function renderReviewList(reviews) {
+        const box = $("rvList");
+        box.innerHTML = "";
+        if (!reviews.length) {
+          box.innerHTML = `<div class="mini muted">No reviews yet.</div>`;
+          return;
+        }
+        for (const rv of reviews) {
+          const when = new Date(rv.updatedAt || Date.now()).toLocaleString();
+          const div = document.createElement("div");
+          div.className = "card";
+          div.style.padding = "10px";
+          div.style.borderRadius = "14px";
+          div.innerHTML = `
+          <div class="row" style="justify-content:space-between;">
+            <div style="font-weight:900;">⭐ ${rv.stars}/5</div>
+            <div class="mini muted">${when}</div>
+          </div>
+          <div class="mini muted" style="margin-top:6px;">${escapeHtml(rv.text || "")}</div>
+        `;
+          box.appendChild(div);
+        }
+      }
+
+      window.saveReview = async function () {
+        if (!state.user) {
+          toast("Please login first.");
+          go("auth");
+          return;
+        }
+        const r = state.activeResource;
+        if (!r) return;
+
+        const stars = Number($("rvStars").value || 5);
+        const text = $("rvText").value.trim() || "Good resource";
+
+        await setDoc(
+          doc(db, "resources", r.id, "reviews", state.user.uid),
+          {
+            stars,
+            text,
+            createdAt: nowTs(),
+            updatedAt: nowTs(),
+          },
+          { merge: true },
+        );
+
+        // recompute avg
+        const reviews = await fetchReviews(r.id);
+        const count = reviews.length;
+        const avg = count
+          ? reviews.reduce((s, x) => s + (x.stars || 0), 0) / count
+          : 0;
+
+        await updateDoc(doc(db, "resources", r.id), {
+          ratingCount: count,
+          ratingAvg: Math.round(avg * 10) / 10,
+        });
+
+        toast("Saved");
+        renderReviewList(reviews);
+        await fetchResources();
+        renderResources();
+      };
+
+      /* ====================== CREATE MODAL ====================== */
+      window.openCreate = function (kind) {
+        if (!state.user) {
+          toast("Login required to post.");
+          go("auth");
+          return;
+        }
+        state.activeCreate = kind;
+        $("createMsg").textContent = "";
+        $("cTitle").value = "";
+        $("cSub").value = "";
+        $("cBody").value = "";
+        $("cLabel").value = "General";
+        $("cExtra").value = "";
+
+        const meta = {
+          ann: [
+            "Create Announcement",
+            "Short + clear updates; use Label: Important for pinned posts.",
+          ],
+          asg: ["Add Assignment", "Use Extra as deadline (YYYY-MM-DD)."],
+          thr: [
+            "New Thread",
+            "Ask doubts, share approaches, request resources.",
+          ],
+          opp: [
+            "Post Opportunity",
+            "Use Extra as application link or last date.",
+          ],
+          fest: [
+            "Add Fest Update",
+            "Use Extra as venue/date or registration link.",
+          ],
+        }[kind];
+
+        $("createTitle").textContent = meta[0];
+        $("createHint").textContent = meta[1];
+        $("createModal").classList.remove("hide");
+      };
+
+      window.closeCreate = function () {
+        $("createModal").classList.add("hide");
+        state.activeCreate = null;
+      };
+
+      window.submitCreate = async function () {
+        const k = state.activeCreate;
+        if (!k) return;
+
+        const title = $("cTitle").value.trim();
+        const sub = $("cSub").value.trim();
+        const body = $("cBody").value.trim();
+        const label = $("cLabel").value;
+        const extra = $("cExtra").value.trim();
+
+        if (!title || !body) {
+          $("createMsg").textContent = "Please fill title and body.";
+          return;
+        }
+
+        const map = {
+          ann: "announcements",
+          asg: "assignments",
+          thr: "threads",
+          opp: "opportunities",
+          fest: "fests",
+        };
+        const col = map[k];
+
+        const id = rid();
+        const base = {
+          ownerUid: state.user.uid,
+          title,
+          subtitle: sub,
+          body,
+          label,
+          extra,
+          createdAt: nowTs(),
+          updatedAt: nowTs(),
+        };
+
+        // some extra fields
+        if (col === "announcements") {
+          base.pinned = label === "Important";
+          base.views = Math.floor(200 + Math.random() * 1800);
+        }
+        if (col === "assignments") {
+          base.deadline = extra || isoDatePlus(7);
+          base.status = "In progress";
+          base.priority = ["High", "Medium", "Low"][
+            Math.floor(Math.random() * 3)
+          ];
+          base.points = [10, 15, 20, 25][Math.floor(Math.random() * 4)];
+        }
+        if (col === "threads") {
+          base.replies = Math.floor(0 + Math.random() * 18);
+          base.upvotes = Math.floor(2 + Math.random() * 80);
+          base.tags = sub
+            ? sub
+                .split(",")
+                .map((x) => x.trim())
+                .filter(Boolean)
+            : ["general"];
+        }
+        if (col === "opportunities") {
+          base.company = sub || "Company";
+          base.mode = ["Onsite", "Hybrid", "Remote"][
+            Math.floor(Math.random() * 3)
+          ];
+          base.stipend = ["₹8k", "₹12k", "₹15k", "₹20k", "₹25k"][
+            Math.floor(Math.random() * 5)
+          ];
+          base.apply = extra || "https://example.com/apply";
+          base.skills = [
+            "DSA",
+            "Web",
+            "DBMS",
+            "Node",
+            "Angular",
+            "React",
+            "Python",
+          ]
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 4);
+        }
+        if (col === "fests") {
+          base.venue = sub || "Campus";
+          base.when = extra || isoDatePlus(10);
+          base.reg = "https://example.com/register";
+          base.category = ["Cultural", "Tech", "Sports", "Literary"][
+            Math.floor(Math.random() * 4)
+          ];
+        }
+
+        await setDoc(doc(db, col, id), base);
+        toast("Published");
+        closeCreate();
+        await fetchAll();
+        renderAll();
+        updateKPIs();
+      };
+
+      /* ====================== PERFORMANCE ====================== */
+      function perfDefault() {
+        return {
+          attendance: 82,
+          internal: 34,
+          skills: ["DSA", "DBMS", "Web Dev", "Aptitude", "Projects"],
+          bestStreak: "9 days",
+          focus: "Unit 3 + previous papers",
+          load: "2 hrs/day + 1 mock/week",
+          updatedAt: nowTs(),
+        };
+      }
+
+      function applyPerf(perf) {
+        const att = Number(perf.attendance || 0);
+        const intr = Number(perf.internal || 0);
+
+        $("attNum").textContent = att + "%";
+        $("intNum").textContent = intr + "/50";
+        $("attBar").style.width = Math.max(0, Math.min(100, att)) + "%";
+        $("intBar").style.width =
+          Math.max(0, Math.min(100, (intr / 50) * 100)) + "%";
+
+        const skills = Array.isArray(perf.skills) ? perf.skills : [];
+        const box = $("skillsBox");
+        box.innerHTML = "";
+        for (const s of skills.slice(0, 8)) {
+          const pct = Math.floor(35 + Math.random() * 60);
+          const div = document.createElement("div");
+          div.className = "pill";
+          div.innerHTML = `<span>${escapeHtml(s)}</span><span class="badge">${pct}%</span>`;
+          box.appendChild(div);
+        }
+
+        $("attInput").value = String(att);
+        $("intInput").value = String(intr);
+        $("skillInput").value = skills.join(", ");
+
+        // insights
+        $("insStreak").textContent = perf.bestStreak || "—";
+        $("insFocus").textContent = perf.focus || "—";
+        $("insLoad").textContent = perf.load || "—";
+      }
+
+      window.applyPerfPreview = function () {
+        const att = Number($("attInput").value || 0);
+        const intr = Number($("intInput").value || 0);
+        const skills = $("skillInput")
+          .value.split(",")
+          .map((x) => x.trim())
+          .filter(Boolean);
+        const perf = {
+          attendance: att,
+          internal: intr,
+          skills,
+          bestStreak: att >= 85 ? "12 days" : "7 days",
+          focus:
+            intr < 35 ? "Core units + practice sets" : "Revision + mock tests",
+          load:
+            skills.length > 4
+              ? "2.5 hrs/day + 2 mocks/week"
+              : "2 hrs/day + 1 mock/week",
+          updatedAt: nowTs(),
+        };
+        applyPerf(perf);
+        toast("Preview updated");
+      };
+
+      window.savePerformance = async function () {
+        if (!state.user) {
+          toast("Login required.");
+          go("auth");
+          return;
+        }
+        const att = Number($("attInput").value || 0);
+        const intr = Number($("intInput").value || 0);
+        const skills = $("skillInput")
+          .value.split(",")
+          .map((x) => x.trim())
+          .filter(Boolean);
+
+        const perf = {
+          attendance: att,
+          internal: intr,
+          skills,
+          bestStreak: att >= 85 ? "12 days" : "7 days",
+          focus:
+            intr < 35 ? "Core units + practice sets" : "Revision + mock tests",
+          load:
+            skills.length > 4
+              ? "2.5 hrs/day + 2 mocks/week"
+              : "2 hrs/day + 1 mock/week",
+          updatedAt: nowTs(),
+        };
+
+        await setDoc(doc(db, "performance", state.user.uid), perf, {
+          merge: true,
+        });
+        state.perf = perf;
+        applyPerf(perf);
+        toast("Saved");
+      };
+
+      /* ====================== SEED STARTER CONTENT ====================== */
+      async function seedDocs(colName, docs) {
+        const batch = writeBatch(db);
+        for (const d of docs) {
+          const id = rid();
+          batch.set(doc(db, colName, id), d);
+        }
+        await batch.commit();
+      }
+
+      window.seedAnnouncements = async function () {
+        if (!state.user) {
+          toast("Login required.");
+          go("auth");
+          return;
+        }
+        const base = [
+          {
+            title: "Mid-Sem Schedule Released",
+            subtitle: "Academic, timetable, exams",
+            body: "Mid-semester exams begin next week. Check department notice board and the updated timetable in the portal. Reach out to your class coordinator for hall allocation.",
+            label: "Important",
+            extra: "Sem 3–6",
+            pinned: true,
+            views: 1840,
+            createdAt: nowTs() - 86400000 * 1,
+            updatedAt: nowTs() - 86400000 * 1,
+          },
+          {
+            title: "Library Hours Extended",
+            subtitle: "General, facilities",
+            body: "Library will be open until 9:30 PM on weekdays for the next two weeks. Silent study zones are available on Level-2.",
+            label: "General",
+            extra: "Weekdays",
+            pinned: false,
+            views: 920,
+            createdAt: nowTs() - 86400000 * 2,
+            updatedAt: nowTs() - 86400000 * 2,
+          },
+          {
+            title: "Placement Talk: Resume + ATS",
+            subtitle: "Placement, career",
+            body: "A resume and ATS optimization session is scheduled. Bring your latest resume draft. Live review + templates will be shared.",
+            label: "Placement",
+            extra: isoDatePlus(3),
+            pinned: true,
+            views: 2310,
+            createdAt: nowTs() - 86400000 * 3,
+            updatedAt: nowTs() - 86400000 * 3,
+          },
+          {
+            title: "Workshop: Git + Team Collaboration",
+            subtitle: "Club, hands-on",
+            body: "Hands-on workshop covering branching, PR flow, code review etiquette, and issue tracking. Bring your laptop.",
+            label: "Club",
+            extra: isoDatePlus(5),
+            pinned: false,
+            views: 760,
+            createdAt: nowTs() - 86400000 * 4,
+            updatedAt: nowTs() - 86400000 * 4,
+          },
+          {
+            title: "Lab Submission Window Updated",
+            subtitle: "Academic, labs",
+            body: "Submission window has been extended by 48 hours for select labs. Ensure PDF format and file naming conventions are followed.",
+            label: "Academic",
+            extra: isoDatePlus(2),
+            pinned: false,
+            views: 1330,
+            createdAt: nowTs() - 86400000 * 5,
+            updatedAt: nowTs() - 86400000 * 5,
+          },
+        ];
+        await seedDocs("announcements", base);
+        toast("Announcements added");
+        await fetchAll();
+        renderAll();
+        updateKPIs();
+      };
+
+      window.seedAssignments = async function () {
+        if (!state.user) {
+          toast("Login required.");
+          go("auth");
+          return;
+        }
+        const base = [
+          {
+            title: "DSA Sheet – Arrays & Hashing",
+            subtitle: "Leet practice set",
+            body: "Complete 18 problems (easy→medium). Submit solution links and brief notes on approach.",
+            label: "Academic",
+            extra: isoDatePlus(2),
+            deadline: isoDatePlus(2),
+            status: "In progress",
+            priority: "High",
+            points: 20,
+            createdAt: nowTs() - 86400000 * 1,
+            updatedAt: nowTs() - 86400000 * 1,
+            ownerUid: state.user.uid,
+          },
+          {
+            title: "DBMS Mini-Project ER Diagram",
+            subtitle: "Schema + normalization",
+            body: "Create ER diagram, convert to relational schema, and list functional dependencies. Add 3 sample queries.",
+            label: "Academic",
+            extra: isoDatePlus(4),
+            deadline: isoDatePlus(4),
+            status: "Not started",
+            priority: "Medium",
+            points: 15,
+            createdAt: nowTs() - 86400000 * 2,
+            updatedAt: nowTs() - 86400000 * 2,
+            ownerUid: state.user.uid,
+          },
+          {
+            title: "OS Assignment: CPU Scheduling Report",
+            subtitle: "FCFS, SJF, RR",
+            body: "Write a comparative report with Gantt charts and turnaround time calculations for 3 test cases.",
+            label: "Academic",
+            extra: isoDatePlus(1),
+            deadline: isoDatePlus(1),
+            status: "In progress",
+            priority: "High",
+            points: 25,
+            createdAt: nowTs() - 86400000 * 3,
+            updatedAt: nowTs() - 86400000 * 3,
+            ownerUid: state.user.uid,
+          },
+          {
+            title: "CN Lab: Wireshark Capture",
+            subtitle: "HTTP, DNS, TCP handshake",
+            body: "Capture packets and annotate screenshots for key events. Add observations and inference summary.",
+            label: "Academic",
+            extra: isoDatePlus(7),
+            deadline: isoDatePlus(7),
+            status: "Not started",
+            priority: "Low",
+            points: 10,
+            createdAt: nowTs() - 86400000 * 4,
+            updatedAt: nowTs() - 86400000 * 4,
+            ownerUid: state.user.uid,
+          },
+          {
+            title: "Aptitude Mock – Set 3",
+            subtitle: "Quant + LR",
+            body: "Attempt mock and review incorrect answers. Summarize 5 patterns you missed.",
+            label: "General",
+            extra: isoDatePlus(3),
+            deadline: isoDatePlus(3),
+            status: "In progress",
+            priority: "Medium",
+            points: 10,
+            createdAt: nowTs() - 86400000 * 5,
+            updatedAt: nowTs() - 86400000 * 5,
+            ownerUid: state.user.uid,
+          },
+        ];
+        await seedDocs("assignments", base);
+        toast("Assignments added");
+        await fetchAll();
+        renderAll();
+        updateKPIs();
+      };
+
+      window.seedThreads = async function () {
+        if (!state.user) {
+          toast("Login required.");
+          go("auth");
+          return;
+        }
+        const base = [
+          {
+            title: "How to prepare for DBMS viva effectively?",
+            subtitle: "dbms, viva, tips",
+            body: "Share a compact checklist: normalization, indexing, SQL query patterns, and common pitfalls.",
+            label: "General",
+            extra: "",
+            replies: 14,
+            upvotes: 62,
+            tags: ["dbms", "viva", "tips"],
+            createdAt: nowTs() - 86400000 * 1,
+            updatedAt: nowTs() - 86400000 * 1,
+            ownerUid: state.user.uid,
+          },
+          {
+            title: "Best way to structure DSA notes?",
+            subtitle: "dsa, notes, revision",
+            body: "Do you prefer topic-wise templates or problem-wise logs? Drop a screenshot format if possible.",
+            label: "Academic",
+            replies: 9,
+            upvotes: 44,
+            tags: ["dsa", "notes", "revision"],
+            createdAt: nowTs() - 86400000 * 2,
+            updatedAt: nowTs() - 86400000 * 2,
+            ownerUid: state.user.uid,
+          },
+          {
+            title: "Project partner needed: Full-stack dashboard",
+            subtitle: "angular, firebase, ui",
+            body: "Looking for a teammate for UI + Firebase integration. Need clean design + structured collections.",
+            label: "Club",
+            replies: 11,
+            upvotes: 57,
+            tags: ["angular", "firebase", "hackathon"],
+            createdAt: nowTs() - 86400000 * 3,
+            updatedAt: nowTs() - 86400000 * 3,
+            ownerUid: state.user.uid,
+          },
+          {
+            title: "OS: RR vs SJF confusion (example case)",
+            subtitle: "os, scheduling",
+            body: "Can someone explain with step-by-step Gantt chart for a 5-process sample and show TAT/WT?",
+            label: "Academic",
+            replies: 6,
+            upvotes: 31,
+            tags: ["os", "scheduling"],
+            createdAt: nowTs() - 86400000 * 4,
+            updatedAt: nowTs() - 86400000 * 4,
+            ownerUid: state.user.uid,
+          },
+          {
+            title: "Placement prep: ATS + projects",
+            subtitle: "placement, resume",
+            body: "What project formats are most impactful? Any templates for 1-page resumes?",
+            label: "Placement",
+            replies: 18,
+            upvotes: 88,
+            tags: ["placement", "resume", "projects"],
+            createdAt: nowTs() - 86400000 * 5,
+            updatedAt: nowTs() - 86400000 * 5,
+            ownerUid: state.user.uid,
+          },
+        ];
+        await seedDocs("threads", base);
+        toast("Forum threads added");
+        await fetchAll();
+        renderAll();
+        updateKPIs();
+      };
+
+      window.seedOpp = async function () {
+        if (!state.user) {
+          toast("Login required.");
+          go("auth");
+          return;
+        }
+        const base = [
+          {
+            title: "Frontend Internship – Angular UI",
+            subtitle: "Product team",
+            body: "Work on dashboards, components, performance optimization, and clean UI states. Strong CSS + accessibility preferred.",
+            label: "Placement",
+            company: "NovaStack Labs",
+            mode: "Hybrid",
+            stipend: "₹15k",
+            skills: ["Angular", "TypeScript", "CSS", "Firebase"],
+            apply: "https://example.com/apply",
+            extra: isoDatePlus(8),
+            createdAt: nowTs() - 86400000 * 1,
+            updatedAt: nowTs() - 86400000 * 1,
+            ownerUid: state.user.uid,
+          },
+          {
+            title: "Backend Internship – Node + Firestore",
+            subtitle: "Systems",
+            body: "Design collections, security rules, data modeling, and minimal APIs. Bonus: monitoring + logs.",
+            label: "Placement",
+            company: "CloudForge",
+            mode: "Remote",
+            stipend: "₹20k",
+            skills: ["Node", "Firestore", "Auth", "Rules"],
+            apply: "https://example.com/apply",
+            extra: isoDatePlus(10),
+            createdAt: nowTs() - 86400000 * 2,
+            updatedAt: nowTs() - 86400000 * 2,
+            ownerUid: state.user.uid,
+          },
+          {
+            title: "Campus Ambassador – Tech Fest",
+            subtitle: "Events",
+            body: "Drive registrations, create content, coordinate volunteers. Great for networking + leadership.",
+            label: "Club",
+            company: "Campus Council",
+            mode: "Onsite",
+            stipend: "Incentives",
+            skills: ["Communication", "Marketing", "Leadership"],
+            apply: "https://example.com/apply",
+            extra: isoDatePlus(6),
+            createdAt: nowTs() - 86400000 * 3,
+            updatedAt: nowTs() - 86400000 * 3,
+            ownerUid: state.user.uid,
+          },
+          {
+            title: "Data Analyst Internship",
+            subtitle: "Data + dashboards",
+            body: "Work on data cleaning, charts, and reporting. Prefer Excel/SQL knowledge.",
+            label: "Placement",
+            company: "InsightWorks",
+            mode: "Remote",
+            stipend: "₹12k",
+            skills: ["SQL", "Excel", "Charts", "Python"],
+            apply: "https://example.com/apply",
+            extra: isoDatePlus(9),
+            createdAt: nowTs() - 86400000 * 4,
+            updatedAt: nowTs() - 86400000 * 4,
+            ownerUid: state.user.uid,
+          },
+          {
+            title: "Open Source Fellowship",
+            subtitle: "Mentored PRs",
+            body: "Contribute to real repositories with weekly mentorship. Build strong portfolio and PR history.",
+            label: "General",
+            company: "OpenGuild",
+            mode: "Remote",
+            stipend: "₹25k",
+            skills: ["Git", "PRs", "Docs", "Testing"],
+            apply: "https://example.com/apply",
+            extra: isoDatePlus(12),
+            createdAt: nowTs() - 86400000 * 5,
+            updatedAt: nowTs() - 86400000 * 5,
+            ownerUid: state.user.uid,
+          },
+        ];
+        await seedDocs("opportunities", base);
+        toast("Opportunities added");
+        await fetchAll();
+        renderAll();
+        updateKPIs();
+      };
+
+      window.seedFests = async function () {
+        if (!state.user) {
+          toast("Login required.");
+          go("auth");
+          return;
+        }
+        const base = [
+          {
+            title: "Tech Sprint – 6 Hour Build Challenge",
+            subtitle: "Hack + demo",
+            body: "Rapid build with checkpoints, mentors, and final pitch. Bring your laptop + chargers.",
+            label: "Fest",
+            venue: "Main Auditorium",
+            when: isoDatePlus(9),
+            reg: "https://example.com/register",
+            category: "Tech",
+            createdAt: nowTs() - 86400000 * 1,
+            updatedAt: nowTs() - 86400000 * 1,
+            ownerUid: state.user.uid,
+          },
+          {
+            title: "Battle of Bands",
+            subtitle: "Live stage",
+            body: "Bands compete with original + cover set. Crowd votes + judges score.",
+            label: "Fest",
+            venue: "Open Air Theatre",
+            when: isoDatePlus(11),
+            reg: "https://example.com/register",
+            category: "Cultural",
+            createdAt: nowTs() - 86400000 * 2,
+            updatedAt: nowTs() - 86400000 * 2,
+            ownerUid: state.user.uid,
+          },
+          {
+            title: "Valorant LAN",
+            subtitle: "5v5 brackets",
+            body: "Knockout stages with semi-finals and grand finals. Slots limited.",
+            label: "Fest",
+            venue: "Lab Block – Arena Room",
+            when: isoDatePlus(10),
+            reg: "https://example.com/register",
+            category: "Sports",
+            createdAt: nowTs() - 86400000 * 3,
+            updatedAt: nowTs() - 86400000 * 3,
+            ownerUid: state.user.uid,
+          },
+          {
+            title: "Literary Slam: Debate + JAM",
+            subtitle: "Speak fast, think faster",
+            body: "Debate rounds, JAM (Just-A-Minute), and storytelling finals.",
+            label: "Fest",
+            venue: "Seminar Hall – 2",
+            when: isoDatePlus(8),
+            reg: "https://example.com/register",
+            category: "Literary",
+            createdAt: nowTs() - 86400000 * 4,
+            updatedAt: nowTs() - 86400000 * 4,
+            ownerUid: state.user.uid,
+          },
+          {
+            title: "MS Ramaiah Fest Spotlight: Campus Energy & Culture",
+            subtitle: "MSRAmIAH blog update",
+            body: "This year’s MS Ramaiah fest vibe is a perfect mix of tech showcases, cultural stages, and crowd-pulling games. The highlight is how events are spaced across venues to keep the campus moving — workshops during the day, performances at sunset, and showcases into the night. If you’re planning a visit, prioritise the flagship stage performances, then block a window for tech showcases and club booths. It’s the kind of fest where you come for one event but end up staying for five.",
+            label: "Fest",
+            venue: "MS Ramaiah Campus",
+            when: isoDatePlus(13),
+            reg: "https://example.com/register",
+            category: "Cultural",
+            createdAt: nowTs() - 86400000 * 5,
+            updatedAt: nowTs() - 86400000 * 5,
+            ownerUid: state.user.uid,
+          },
+        ];
+        await seedDocs("fests", base);
+        toast("Fest board updated");
+        await fetchAll();
+        renderAll();
+        updateKPIs();
+      };
+
+      window.seedPerformance = async function () {
+        if (!state.user) {
+          toast("Login required.");
+          go("auth");
+          return;
+        }
+        const perf = perfDefault();
+        await setDoc(doc(db, "performance", state.user.uid), perf, {
+          merge: true,
+        });
+        state.perf = perf;
+        applyPerf(perf);
+        toast("Performance initialized");
+      };
+
+      window.seedAll = async function () {
+        if (!state.user) {
+          toast("Login first to seed your workspace.");
+          go("auth");
+          return;
+        }
+        await seedAnnouncements();
+        await seedAssignments();
+        await seedThreads();
+        await seedOpp();
+        await seedFests();
+        await seedPerformance();
+        await fetchAll();
+        renderAll();
+        updateKPIs();
+        toast("Starter content ready");
+      };
+
+      /* ====================== RENDERERS ====================== */
+      function renderResources() {
+        const listEl = $("resList");
+        const emptyEl = $("resEmpty");
+        if (!listEl) return;
+
+        const qText = $("qText").value.trim().toLowerCase();
+        const qType = $("qType").value;
+        const qPrivacy = $("qPrivacy").value;
+        const qSort = $("qSort").value;
+
+        let items = [...state.resources];
+
+        if (qText) {
+          items = items.filter(
+            (r) =>
+              (r.title || "").toLowerCase().includes(qText) ||
+              (r.subject || "").toLowerCase().includes(qText) ||
+              (r.tags || []).some((t) =>
+                String(t).toLowerCase().includes(qText),
+              ),
+          );
+        }
+        if (qType) items = items.filter((r) => r.type === qType);
+        if (qPrivacy) items = items.filter((r) => r.privacy === qPrivacy);
+
+        if (qSort === "highest")
+          items.sort((a, b) => (b.ratingAvg || 0) - (a.ratingAvg || 0));
+        else if (qSort === "popular")
+          items.sort((a, b) => (b.downloadCount || 0) - (a.downloadCount || 0));
+        else items.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+        listEl.innerHTML = "";
+        if (!items.length) {
+          emptyEl.textContent = "No resources found. Upload one to start.";
+          return;
+        }
+        emptyEl.textContent = "";
+
+        for (const r of items) {
+          const locked = r.privacy === "Private" && !canAccessResource(r);
+          const tags = (r.tags || [])
+            .slice(0, 4)
+            .map((t) => `<span class="badge">#${escapeHtml(t)}</span>`)
+            .join(" ");
+
+          const canDel = state.user && r.ownerUid === state.user.uid;
+
+          const div = document.createElement("div");
+          div.className = "card item";
+          div.innerHTML = `
+          <div class="item-head">
+            <div style="min-width:0;">
+              <div class="item-title">${escapeHtml(r.title)}</div>
+              <div class="mini muted item-meta">
+                ${escapeHtml(r.subject)} • Sem ${escapeHtml(r.semester)} • ${escapeHtml(r.branch || "")} • ${escapeHtml(r.type)} • ${escapeHtml(r.yearBatch || "")}
+              </div>
+              <div class="tags">${tags}</div>
+              <div class="mini muted" style="margin-top:8px;">
+                ⭐ ${r.ratingAvg || 0} (${r.ratingCount || 0}) • ⬇ ${r.downloadCount || 0}
+              </div>
+            </div>
+
+            <div class="item-actions">
+              <span class="badge ${r.privacy === "Public" ? "public" : "private"}">${r.privacy}</span>
+              ${locked ? `<span class="badge warn">🔒 Restricted</span>` : ``}
+              <button class="btn btn-primary btn-small" ${locked ? `style="opacity:.55"` : ``} onclick="downloadResource('${r.id}')">⬇ Download</button>
+              <button class="btn btn-ghost btn-small" onclick="openReview('${r.id}')">⭐ Review</button>
+              ${canDel ? `<button class="btn btn-danger btn-small" onclick="deleteResource('${r.id}')">🗑 Delete</button>` : ``}
+            </div>
+          </div>
+        `;
+          listEl.appendChild(div);
+        }
+      }
+      window.renderResources = renderResources;
+
+      function renderAnnouncements() {
+        const list = $("annList"),
+          empty = $("annEmpty");
+        if (!list) return;
+
+        list.innerHTML = "";
+        if (!state.announcements.length) {
+          empty.textContent = "No announcements yet. Click Seed or Create.";
+          $("annPinned").textContent = "0";
+          $("annWeek").textContent = "0";
+          $("annReach").textContent = "0";
+          return;
+        }
+        empty.textContent = "";
+
+        const pinned = state.announcements.filter((a) => a.pinned).length;
+        const week = state.announcements.filter(
+          (a) => Date.now() - (a.createdAt || 0) < 7 * 86400000,
+        ).length;
+        const reach = state.announcements.reduce(
+          (s, a) => s + (a.views || 0),
+          0,
+        );
+
+        $("annPinned").textContent = String(pinned);
+        $("annWeek").textContent = String(week);
+        $("annReach").textContent = String(reach);
+
+        for (const a of state.announcements) {
+          const div = document.createElement("div");
+          div.className = "card item";
+          const badge = a.pinned
+            ? `<span class="badge ok">📌 Pinned</span>`
+            : `<span class="badge">Post</span>`;
+          div.innerHTML = `
+          <div class="item-head">
+            <div style="min-width:0;">
+              <div class="item-title">${escapeHtml(a.title)}</div>
+              <div class="mini muted">${escapeHtml(a.subtitle || a.label || "")}</div>
+              <div class="p" style="margin-top:10px;">${escapeHtml(a.body || "")}</div>
+              <div class="row" style="margin-top:12px;">
+                <span class="badge">${escapeHtml(a.label || "General")}</span>
+                ${a.extra ? `<span class="badge">📅 ${escapeHtml(a.extra)}</span>` : ``}
+                <span class="badge">👁 ${a.views || 0}</span>
+              </div>
+            </div>
+            <div class="item-actions">
+              ${badge}
+            </div>
+          </div>
+        `;
+          list.appendChild(div);
+        }
+      }
+
+      function renderAssignments() {
+        const list = $("asgList"),
+          empty = $("asgEmpty");
+        if (!list) return;
+
+        list.innerHTML = "";
+        if (!state.assignments.length) {
+          empty.textContent = "No assignments yet. Click Seed or Add.";
+          $("asgSoon").textContent = "0";
+          $("asgProg").textContent = "0";
+          $("asgDone").textContent = "0";
+          return;
+        }
+        empty.textContent = "";
+
+        const soon = state.assignments.filter(
+          (a) => daysLeft(a.deadline || a.extra || isoDatePlus(30)) <= 3,
+        ).length;
+        const prog = state.assignments.filter((a) =>
+          (a.status || "").toLowerCase().includes("progress"),
+        ).length;
+        const done = state.assignments.filter((a) =>
+          (a.status || "").toLowerCase().includes("done"),
+        ).length;
+
+        $("asgSoon").textContent = String(soon);
+        $("asgProg").textContent = String(prog);
+        $("asgDone").textContent = String(done);
+
+        // sort by deadline
+        const items = [...state.assignments].sort(
+          (a, b) =>
+            new Date(a.deadline || a.extra || isoDatePlus(30)).getTime() -
+            new Date(b.deadline || b.extra || isoDatePlus(30)).getTime(),
+        );
+
+        for (const a of items) {
+          const dl = a.deadline || a.extra || isoDatePlus(10);
+          const d = daysLeft(dl);
+          const urgency = d <= 1 ? "danger" : d <= 3 ? "warn" : "ok";
+
+          const div = document.createElement("div");
+          div.className = "card item";
+          div.innerHTML = `
+          <div class="item-head">
+            <div style="min-width:0;">
+              <div class="item-title">${escapeHtml(a.title)}</div>
+              <div class="mini muted">${escapeHtml(a.subtitle || "")}</div>
+              <div class="p" style="margin-top:10px;">${escapeHtml(a.body || "")}</div>
+
+              <div class="row" style="margin-top:12px;">
+                <span class="badge ${urgency}">⏳ ${d} days left</span>
+                <span class="badge">📅 ${escapeHtml(dl)}</span>
+                <span class="badge">${escapeHtml(a.priority || "Medium")}</span>
+                <span class="badge">🎯 ${escapeHtml(String(a.points || 10))} pts</span>
+                <span class="badge">${escapeHtml(a.status || "In progress")}</span>
+              </div>
+
+              <div style="margin-top:12px;" class="bar"><div style="width:${Math.max(10, Math.min(95, 100 - d * 8))}%"></div></div>
+              <div class="mini muted" style="margin-top:8px;">Progress estimate based on deadline proximity.</div>
+            </div>
+          </div>
+        `;
+          list.appendChild(div);
+        }
+      }
+
+      function renderThreads() {
+        const list = $("thrList"),
+          empty = $("thrEmpty");
+        if (!list) return;
+
+        list.innerHTML = "";
+        if (!state.threads.length) {
+          empty.textContent = "No threads yet. Click Seed or New Thread.";
+          $("thrActive").textContent = "0";
+          $("thrHot").textContent = "0";
+          $("thrReplies").textContent = "0";
+          return;
+        }
+        empty.textContent = "";
+
+        $("thrActive").textContent = String(state.threads.length);
+        $("thrHot").textContent = String(
+          state.threads.filter((t) => (t.upvotes || 0) > 40).length,
+        );
+        $("thrReplies").textContent = String(
+          state.threads.reduce((s, t) => s + (t.replies || 0), 0),
+        );
+
+        for (const t of state.threads) {
+          const tags = (t.tags || [])
+            .slice(0, 4)
+            .map((x) => `<span class="badge">#${escapeHtml(x)}</span>`)
+            .join(" ");
+          const div = document.createElement("div");
+          div.className = "card item";
+          div.innerHTML = `
+          <div class="item-head">
+            <div style="min-width:0;">
+              <div class="item-title">${escapeHtml(t.title)}</div>
+              <div class="mini muted">${escapeHtml(t.subtitle || t.label || "")}</div>
+              <div class="p" style="margin-top:10px;">${escapeHtml(t.body || "")}</div>
+              <div class="tags">${tags}</div>
+              <div class="row" style="margin-top:12px;">
+                <span class="badge">👍 ${t.upvotes || 0}</span>
+                <span class="badge">💬 ${t.replies || 0}</span>
+                <span class="badge">${escapeHtml(t.label || "General")}</span>
+              </div>
+            </div>
+            <div class="item-actions">
+              <span class="badge ok">Trending</span>
+            </div>
+          </div>
+        `;
+          list.appendChild(div);
+        }
+      }
+
+      function renderOpps() {
+        const list = $("oppList"),
+          empty = $("oppEmpty");
+        if (!list) return;
+
+        list.innerHTML = "";
+        if (!state.opps.length) {
+          empty.textContent = "No opportunities yet. Click Seed or Post.";
+          $("oppOpen").textContent = "0";
+          $("oppRemote").textContent = "0";
+          $("oppStip").textContent = "—";
+          return;
+        }
+        empty.textContent = "";
+
+        $("oppOpen").textContent = String(state.opps.length);
+        $("oppRemote").textContent = String(
+          state.opps.filter((o) => (o.mode || "").toLowerCase() === "remote")
+            .length,
+        );
+        $("oppStip").textContent = "₹8k – ₹25k";
+
+        for (const o of state.opps) {
+          const skills = (o.skills || [])
+            .slice(0, 5)
+            .map((s) => `<span class="badge">#${escapeHtml(s)}</span>`)
+            .join(" ");
+          const div = document.createElement("div");
+          div.className = "card item";
+          div.innerHTML = `
+          <div class="item-head">
+            <div style="min-width:0;">
+              <div class="item-title">${escapeHtml(o.title)}</div>
+              <div class="mini muted">${escapeHtml(o.company || "")} • ${escapeHtml(o.mode || "")}</div>
+              <div class="p" style="margin-top:10px;">${escapeHtml(o.body || "")}</div>
+              <div class="tags">${skills}</div>
+              <div class="row" style="margin-top:12px;">
+                <span class="badge ok">💰 ${escapeHtml(o.stipend || "")}</span>
+                <span class="badge">🗓 ${escapeHtml(o.extra || "")}</span>
+                <span class="badge">${escapeHtml(o.label || "General")}</span>
+              </div>
+            </div>
+            <div class="item-actions">
+              <a class="btn btn-primary btn-small" href="${escapeHtml(o.apply || "#")}" target="_blank" rel="noreferrer">Apply</a>
+              <span class="badge">Open</span>
+            </div>
+          </div>
+        `;
+          list.appendChild(div);
+        }
+      }
+
+      function renderFests() {
+        const list = $("festList"),
+          empty = $("festEmpty");
+        if (!list) return;
+
+        list.innerHTML = "";
+        if (!state.fests.length) {
+          empty.textContent = "No fest posts yet. Click Seed or Add.";
+          $("festBlogMeta").textContent = "—";
+          $("festBlogTitle").textContent = "—";
+          $("festBlogBody").textContent = "—";
+          $("festCount").textContent = "0";
+          $("festVenues").textContent = "0";
+          $("festTrend").textContent = "—";
+          return;
+        }
+        empty.textContent = "";
+
+        $("festCount").textContent = String(state.fests.length);
+        $("festVenues").textContent = String(
+          new Set(state.fests.map((f) => f.venue || "")).size,
+        );
+        $("festTrend").textContent = state.fests[0]?.title || "Highlights";
+
+        // Featured blog: pick the one containing MS Ramaiah in title or venue, else latest
+        const featured =
+          state.fests.find(
+            (f) =>
+              (f.title || "").toLowerCase().includes("ramaiah") ||
+              (f.venue || "").toLowerCase().includes("ramaiah"),
+          ) || state.fests[0];
+        $("festBlogMeta").textContent =
+          `${featured.category || "Fest"} • ${featured.when || ""} • ${featured.venue || ""}`;
+        $("festBlogTitle").textContent = featured.title || "—";
+        $("festBlogBody").textContent = featured.body || "—";
+
+        for (const f of state.fests) {
+          const div = document.createElement("div");
+          div.className = "card item";
+          div.innerHTML = `
+          <div class="item-head">
+            <div style="min-width:0;">
+              <div class="item-title">${escapeHtml(f.title)}</div>
+              <div class="mini muted">${escapeHtml(f.category || "")} • ${escapeHtml(f.venue || "")}</div>
+              <div class="p" style="margin-top:10px;">${escapeHtml(f.body || "")}</div>
+              <div class="row" style="margin-top:12px;">
+                <span class="badge ok">📅 ${escapeHtml(f.when || "")}</span>
+                <span class="badge">${escapeHtml(f.label || "Fest")}</span>
+              </div>
+            </div>
+            <div class="item-actions">
+              <a class="btn btn-primary btn-small" href="${escapeHtml(f.reg || "#")}" target="_blank" rel="noreferrer">Register</a>
+              <span class="badge">Live</span>
+            </div>
+          </div>
+        `;
+          list.appendChild(div);
+        }
+      }
+
+      function renderPerformance() {
+        if (!state.user) {
+          // show prompt (keep page visible but numbers blank)
+          applyPerf({
+            attendance: 0,
+            internal: 0,
+            skills: [],
+            bestStreak: "—",
+            focus: "—",
+            load: "—",
+          });
+          return;
+        }
+        const perf = state.perf || perfDefault();
+        applyPerf(perf);
+      }
+
+      function renderAll() {
+        renderResources();
+        renderAnnouncements();
+        renderAssignments();
+        renderThreads();
+        renderOpps();
+        renderFests();
+        renderPerformance();
+      }
+
+      function updateKPIs() {
+        // Landing KPIs
+        $("kpiAnn").textContent = String(state.announcements.length || 0);
+        $("kpiAsg").textContent = String(state.assignments.length || 0);
+        $("kpiRes").textContent = String(state.resources.length || 0);
+      }
+
+      /* ====================== CLOCK BADGE ====================== */
+      setInterval(() => {
+        const d = new Date();
+        $("clockBadge").textContent =
+          `📅 ${d.toLocaleDateString()} • ⏱ ${d.toLocaleTimeString()}`;
+      }, 1000);
+
+      /* ====================== AUTH STATE WATCHER ====================== */
+      onAuthStateChanged(auth, async (user) => {
+        state.user = user || null;
+
+        $("logoutBtn").style.display = user ? "inline-flex" : "none";
+        $("authBtn").textContent = user ? "Account" : "Login";
+        $("who").style.display = user ? "inline-flex" : "none";
+
+        if (user) {
+          state.profile = await loadProfile(user.uid);
+
+          if (state.profile) {
+            $("who").textContent =
+              `${state.profile.name} • ${state.profile.college} • ${state.profile.branch} • Sem ${state.profile.semester}`;
+          } else {
+            $("who").textContent = `Signed in`;
+          }
+
+          await fetchAll();
+          updateKPIs();
+
+          // default: go to dashboard if logged in
+          const hash = (location.hash || "#dashboard").replace("#", "");
+          if (
+            [
+              "landing",
+              "auth",
+              "dashboard",
+              "announcements",
+              "assignments",
+              "discussions",
+              "opportunities",
+              "fest",
+              "performance",
+            ].includes(hash)
+          ) {
+            go(hash);
+          } else {
+            go("dashboard");
+          }
+        } else {
+          state.profile = null;
+          await fetchAll(); // public pages still load
+          updateKPIs();
+
+          const hash = (location.hash || "#landing").replace("#", "");
+          if (hash === "dashboard" || hash === "performance") go("landing");
+          else if (
+            [
+              "landing",
+              "auth",
+              "announcements",
+              "assignments",
+              "discussions",
+              "opportunities",
+              "fest",
+            ].includes(hash)
+          )
+            go(hash);
+          else go("landing");
+        }
+      });
+
+      /* ====================== BOOT ====================== */
+      (function boot() {
+        // theme
+        const saved = localStorage.getItem(LS_THEME) || "dark";
+        setTheme(saved);
+
+        // auth mode UI defaults
+        $("modeLabel").textContent = "Register";
+        $("registerFields").classList.add("hide");
+
+        // initial hash nav (will be re-applied after auth state change)
+        const hash = (location.hash || "#landing").replace("#", "");
+        if (
+          [
+            "landing",
+            "auth",
+            "dashboard",
+            "announcements",
+            "assignments",
+            "discussions",
+            "opportunities",
+            "fest",
+            "performance",
+          ].includes(hash)
+        )
+          go(hash);
+        else go("landing");
+
+        // initial public fetch (counts + content)
+        fetchAll().then(() => {
+          renderAll();
+          updateKPIs();
+        });
+      })();
+    </script>
+  </body>
+</html>
